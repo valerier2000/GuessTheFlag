@@ -79,6 +79,7 @@ struct ContentView: View {
                             FlagImage(country: countries[number])
                                 .rotation3DEffect(.degrees(tappedFlag == number ? 360 : 0), axis: (x: 0, y: 1, z: 0))
                                 .opacity(tappedFlag == nil || tappedFlag == number ? 1.0 : 0.25)
+                                .scaleEffect(tappedFlag == nil || tappedFlag == number ? 1.0 : 0.8)
                         }
                     }
                 }
@@ -111,19 +112,21 @@ struct ContentView: View {
     }
 
     func flagTapped(_ number: Int) {
-        if number == correctAnswer {
-            scoreTitle = "Correct"
-            score += 1
-        } else {
-            let wrongCountry = countries[number]
-            scoreTitle = "Wrong! That's the flag of \(wrongCountry)"
-        }
-        
-        if questionCount < 8 {
-            showingScore = true
-            questionCount += 1
-        } else {
-            showingFinalScore = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            if number == correctAnswer {
+                scoreTitle = "Correct"
+                score += 1
+            } else {
+                let wrongCountry = countries[number]
+                scoreTitle = "Wrong! That's the flag of \(wrongCountry)"
+            }
+            
+            if questionCount < 8 {
+                showingScore = true
+                questionCount += 1
+            } else {
+                showingFinalScore = true
+            }
         }
     }
     
