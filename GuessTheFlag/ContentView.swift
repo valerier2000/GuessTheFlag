@@ -78,6 +78,7 @@ struct ContentView: View {
                         } label: {
                             FlagImage(country: countries[number])
                                 .rotation3DEffect(.degrees(tappedFlag == number ? 360 : 0), axis: (x: 0, y: 1, z: 0))
+                                .opacity(tappedFlag == nil || tappedFlag == number ? 1.0 : 0.25)
                         }
                     }
                 }
